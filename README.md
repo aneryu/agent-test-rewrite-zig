@@ -34,19 +34,21 @@ The test result is only one input to the final score. Implementations are also r
 
 The detailed review is in [`DTOA_IMPLEMENTATION_REVIEW.md`](DTOA_IMPLEMENTATION_REVIEW.md). Its current ranking is summarized below.
 
-| Rank | Candidate | Test Result | Score | Summary |
-|---:|---|---|---:|---|
-| 1 | `answer/reasonix/dtoa.zig` | PASS | 8.8 | Best overall candidate; complete port shape and good maintainability. |
-| 2 | `answer/antigravity-cli/dtoa.zig` | PASS | 8.5 | Strong, C-like port; more raw-pointer-heavy. |
-| 3 | `answer/antigravity-ide/dtoa.zig` | PASS | 8.1 | Complete enough, but has some ABI-signature rough edges. |
-| 4 | `answer/pi-gpt5.5-xhigh/dtoa.zig` | PASS | 8.0 | Solid implementation; does not closely follow the temp-memory contract. |
-| 5 | `answer/codex-gpt5.5-xhigh/dtoa.zig` | PASS | 7.6 | Algorithmically complete, but changes the storage model. |
-| 6 | `answer/forge-mino2.5pro/dtoa.zig` | PASS | 7.2 | Usable, but uses riskier type and alignment choices. |
-| 7 | `answer/codex-gpt5.5-medium/dtoa.zig` | PASS | 4.8 | Passes current tests but relies on approximations. |
-| 8 | `answer/cc-glm5.1/dtoa.zig` | FAIL | 2.4 | Has a full-port shape but incorrect bignum/dtoa/atod behavior. |
-| 9 | `answer/grok/dtoa.zig` | PASS | 2.0 | Passes visible tests through hard-coded cases; not a real implementation. |
-| 10 | `answer/forge-glm5.1/dtoa.zig` | FAIL | 1.5 | Does not export the required C ABI symbols. |
-| 11 | `src/dtoa.zig` | FAIL | 0.5 | Stub implementation only. |
+| Rank | Candidate | Test Result | Score | Cache Hit (Tokens) | Cache Miss (Tokens) | Output / Turns | Cost (USD) | Summary |
+|---:|---|---|---:|:---:|:---:|:---:|:---:|---|
+| 1 | `answer/reasonix/dtoa.zig` | PASS | 8.8 | 9,803,392 | 265,327 | 73 turns | $0.2370 | Best overall candidate; complete port shape and good maintainability. |
+| 2 | `answer/antigravity-cli/dtoa.zig` | PASS | 8.5 | 22,900 | 10,667 | 83.4k tokens (current turn) | ~$0.0262 | Strong, C-like port; more raw-pointer-heavy. |
+| 3 | `answer/antigravity-ide/dtoa.zig` | PASS | 8.1 | — | — | — | — | Complete enough, but has some ABI-signature rough edges. |
+| 4 | `answer/pi-gpt5.5-xhigh/dtoa.zig` | PASS | 8.0 | 4,034,560 | 192,559 | 42,000 tokens | $4.2401 | Solid implementation; does not closely follow the temp-memory contract. |
+| 5 | `answer/codex-gpt5.5-xhigh/dtoa.zig` | PASS | 7.6 | 2,394,112 | 150,788 | 29,798 tokens | $2.8449 | Algorithmically complete, but changes the storage model. |
+| 6 | `answer/forge-mimo2.5pro/dtoa.zig` | PASS | 7.2 | 7,967,040 | 496,788 | 95,597 tokens | $2.3770 | Usable, but uses riskier type and alignment choices. |
+| 7 | `answer/codex-gpt5.5-medium/dtoa.zig` | PASS | 4.8 | — | — | — | — | Passes current tests but relies on approximations. |
+| 8 | `answer/cc-glm5.1/dtoa.zig` | FAIL | 2.4 | — | — | — | — | Has a full-port shape but incorrect bignum/dtoa/atod behavior. |
+| 9 | `answer/grok/dtoa.zig` | PASS | 2.0 | — | — | — | — | Passes visible tests through hard-coded cases; not a real implementation. |
+| 10 | `answer/forge-glm5.1/dtoa.zig` | FAIL | 1.5 | — | — | — | — | Does not export the required C ABI symbols. |
+| 11 | `src/dtoa.zig` | FAIL | 0.5 | — | — | — | — | Stub implementation only. |
+
+*Note: Token and cost metrics are recorded during each candidate's autonomous agent evaluation run. `antigravity-cli` metrics represent the active context usage for the current interactive turn.*
 
 The current recommendation is to use `answer/reasonix/dtoa.zig` as the primary candidate for further work. `answer/antigravity-cli/dtoa.zig` is the best alternative if the priority is staying close to the original C memory model.
 
